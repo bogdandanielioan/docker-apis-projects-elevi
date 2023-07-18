@@ -1,0 +1,47 @@
+version: '2'
+services:
+  mycode-mysql:
+    container_name: mycode-mysql
+    image: mysql:latest
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=mycode-database
+    ports:
+      - "3306:3306"
+    command: mysqld --lower_case_table_names=1 --skip-ssl
+    networks:
+      - mycodenetwork
+
+  online-school-api-demo:
+    container_name: online-school-api-demo
+    image: "bogdandanielioan/online-shop-api-demo:latest"
+    ports:
+      - "80:8080"
+    restart: "always"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    depends_on:
+      - mycode-mysql
+    networks:
+      - mycodenetwork
+
+  autovit-api-demo:
+    container_name: autovit-api-demo
+    image: "bogdandanielioan/autovit-api-demo:latest"
+    ports:
+      - "8081:8081"
+    restart: "always"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    depends_on:
+      - mycode-mysql
+    networks:
+      - mycodenetwork
+
+networks:
+  mycodenetwork:
+
+volumes:
+  mysql_data:
