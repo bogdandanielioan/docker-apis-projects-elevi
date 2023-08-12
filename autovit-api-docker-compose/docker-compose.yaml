@@ -18,7 +18,7 @@ services:
       container_name: autovit-api-demo
       image: "bogdandanielioan/autovit-api-demo:latest"
       ports:
-        - "8080:8080"
+        - "80:8080"
       restart: "always"
       environment:
         SPRING_PROFILES_ACTIVE: dev
