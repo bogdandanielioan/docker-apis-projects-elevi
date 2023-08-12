@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+   mycode-mysql:
+    container_name: mycode-mysql
+    image: mysql:latest
+    volumes:
+      - data:/var/lib/mysql
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=mycode-database
+    ports:
+      - "3306:3306"
+    command: mysqld --lower_case_table_names=1 --skip-ssl
+
+
+volumes:
+    data:
